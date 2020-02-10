@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using OrganiserApp.Services;
 using System.Windows;
-using System.Windows.Input;
+ 
 
 namespace OrganiserApp.ViewModels
 {
@@ -10,30 +10,53 @@ namespace OrganiserApp.ViewModels
 
         private MainViewModel mainViewModel = new MainViewModel();
         private WindowService windowService;
+
         #region Ctors
 
         public LoginViewModel()
         {
-            CloseWindowCommand = new RelayCommand<Window>(this.CloseWindow);
+            LoginButtonCommand = new RelayCommand<Window>(CloseWindow);
             windowService = new WindowService();
+            LoginData= SettingsService.Deserialize();
+            if (LoginData != string.Empty)
+            {
+                SaveLogin = true;
+            }
         }
 
         #endregion
 
-
         #region Properties
 
-        private string _loginData;
+        private string loginData;
         public string LoginData
         {
             get
             {
-                return _loginData;
+                return loginData;
             }
             set
             {
-                _loginData = value;
+                loginData = value;
                 RaisePropertyChanged("LoginData");
+            }
+        }
+
+        private bool saveLogin;
+        public bool SaveLogin
+        {
+            get
+            {
+                return saveLogin;
+            }
+            set
+            {
+                saveLogin = value;
+                if(value == false)
+                {
+                    SettingsService.DeleteSerialized();
+                }
+                RaisePropertyChanged("SaveLogin");
             }
         }
 
@@ -41,17 +64,20 @@ namespace OrganiserApp.ViewModels
 
         #region commands
        
-        public RelayCommand<Window> CloseWindowCommand { get; private set; }
+        public RelayCommand<Window> LoginButtonCommand { get; private set; }
         private void CloseWindow(Window window)
         {
             if (window != null)
             {
-                windowService.ShowWindow(mainViewModel);
+                if (SaveLogin)
+                {
+                    SettingsService.Serialize(LoginData);
+                }
+                windowService.ShowMainWindow(mainViewModel);
                 window.Close();
             }
         }
         #endregion
-
 
     }
 }

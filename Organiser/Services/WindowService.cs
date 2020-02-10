@@ -1,13 +1,15 @@
-﻿using System.Windows;
+﻿using OrganiserApp.ViewModels;
 
 namespace OrganiserApp.Services
 {
     class WindowService
     {
-        public void ShowWindow(object viewModel)
+        public void ShowMainWindow(object viewModel)
         {
-            var win = new Window();
-            win.Content = viewModel;
+            var win = new Main
+            {
+                DataContext = viewModel
+            };
             win.Show();
         }
     }

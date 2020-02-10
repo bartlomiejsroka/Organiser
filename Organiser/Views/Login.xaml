@@ -48,10 +48,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Row="2" Grid.Column="1"  x:Name="LoginButton" Content="Login" Margin="5" Command="{Binding CloseWindowCommand, Mode=OneWay}"  CommandParameter="{Binding ElementName=StartWindow}"/>
+                <Button Grid.Row="2" Grid.Column="1"  x:Name="LoginButton" Content="Login" Margin="5" Command="{Binding LoginButtonCommand, Mode=OneWay}"  CommandParameter="{Binding ElementName=StartWindow}"/>
                 <TextBlock Grid.Row="2" Grid.Column="0"  x:Name="SaveLoginTextBlock" Text="Remember me" TextAlignment="Left" VerticalAlignment="Center" Margin="2" />
-                <CheckBox Grid.Row="2" Grid.Column="0" x:Name="SaveLoginChecBox" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3"/>
+                <CheckBox Grid.Row="2" Grid.Column="0" x:Name="SaveLoginChecBox" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" IsChecked="{Binding SaveLogin}"/>
             </Grid>
         </Grid>
     </Grid>
 </Window>
+<!--todo styles-->
