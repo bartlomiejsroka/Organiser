@@ -19,7 +19,7 @@ namespace OrganiserApp.Services
         {
             get
             {
-                return _jwt == _wrongLoginData ? false : true; 
+                return _jwt == _wrongLoginData || _jwt ==null ? false : true; 
             }
         }
 
@@ -38,9 +38,15 @@ namespace OrganiserApp.Services
                 { "password", password }
             };
             var content = new FormUrlEncodedContent(values);
-            var response = await _client.PostAsync("https://localhost:44326/token", content);
-            _jwt = await response.Content.ReadAsStringAsync();
-            return "ok";
+            try
+            {
+                var response = await _client.PostAsync("https://localhost:44326/token", content);
+                _jwt = await response.Content.ReadAsStringAsync();
+                return "ok";
+            }
+            catch{
+                throw new ApplicationException(Resources.ConnectionError);
+            }
         }
 
         #endregion

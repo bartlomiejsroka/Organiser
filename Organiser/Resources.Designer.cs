@@ -61,6 +61,15 @@ namespace OrganiserApp {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Error - check your connection.
+        /// </summary>
+        internal static string ConnectionError {
+            get {
+                return ResourceManager.GetString("ConnectionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu //LoginData.xml.
         /// </summary>
         internal static string LoginFileName {

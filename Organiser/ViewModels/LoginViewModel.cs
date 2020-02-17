@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using OrganiserApp.Services;
+using System;
 using System.Windows;
  
 
@@ -9,13 +10,14 @@ namespace OrganiserApp.ViewModels
     {
         private WebService _webService = new WebService();
         private MainViewModel _mainViewModel = new MainViewModel();
+        private ErrorViewModel _errorViewModel = new ErrorViewModel();
         private WindowService _windowService;
 
         #region Ctors
 
         public LoginViewModel()
         {
-            LoginButtonCommand = new RelayCommand<Window>(CloseWindow);
+            LoginButtonCommand = new RelayCommand<Window>(LogIn);
             _windowService = new WindowService();
             Username= SettingsService.Deserialize();
             if (Username != string.Empty)
@@ -77,21 +79,28 @@ namespace OrganiserApp.ViewModels
         #region commands
        
         public RelayCommand<Window> LoginButtonCommand { get; private set; }
-        private async void CloseWindow(Window window)
+        private async void LogIn(Window window)
         {
+            bool connectionOk = true;
             if (window != null)
             {
-                if (SaveLogin)
+                if (SaveLogin){ SettingsService.Serialize(Username); }
+                try
                 {
-                    SettingsService.Serialize(Username);
+                    await _webService.GetTokenAsync(Username, Password);
                 }
-                 await _webService.GetTokenAsync(Username,Password);
-                if (_webService.IsLoginValid)
+                catch (Exception e)
+                {
+                    _errorViewModel.ErrorText = e.Message;
+                    _windowService.ShowErrorWindow(_errorViewModel);
+                    connectionOk = false;
+                }
+                if (_webService.IsLoginValid && connectionOk)
                 {
                     _windowService.ShowMainWindow(_mainViewModel);
                     window.Close();
                 }
-                else
+                if(!_webService.IsLoginValid && connectionOk)
                 {
                     MessageBox.Show("Wrong login data");
                 }

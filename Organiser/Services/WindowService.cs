@@ -17,6 +17,14 @@ namespace OrganiserApp.Services
             };
             win.Show();
         }
+        public void ShowErrorWindow(object viewModel)
+        {
+            var win = new Views.Error
+            {
+                DataContext = viewModel
+            };
+            win.Show();
+        }
         #endregion
     }
 }
