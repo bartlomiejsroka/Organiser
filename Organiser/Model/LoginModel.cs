@@ -7,16 +7,16 @@ namespace OrganiserApp.Model
     class LoginModel : BaseModel
     {
         #region properties
-        private string login;
+        private string _login;
         public string Login
         {
             get
             {
-                return login;
+                return _login;
             }
             set
             {
-                login = value;
+                _login = value;
                 RaisePropertyChanged("LoginData");
             }
         }

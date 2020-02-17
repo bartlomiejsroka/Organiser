@@ -41,6 +41,9 @@ namespace OrganiserApp.Services
             }
         }
 
+        /// <summary>
+        /// Delete saved login data
+        /// </summary>
         public static void DeleteSerialized()
         {
             XmlSerializer writer = new XmlSerializer(typeof(string));

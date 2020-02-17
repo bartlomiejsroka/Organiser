@@ -7,6 +7,9 @@ namespace OrganiserApp.Model
 {
     public abstract class BaseModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Base PropertyChanged implementation
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged(string propertyName)
         {

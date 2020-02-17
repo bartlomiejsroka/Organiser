@@ -8,15 +8,15 @@ namespace OrganiserApp.ViewModels
     public class LoginViewModel : ViewModelBase
     {
 
-        private MainViewModel mainViewModel = new MainViewModel();
-        private WindowService windowService;
+        private MainViewModel _mainViewModel = new MainViewModel();
+        private WindowService _windowService;
 
         #region Ctors
 
         public LoginViewModel()
         {
             LoginButtonCommand = new RelayCommand<Window>(CloseWindow);
-            windowService = new WindowService();
+            _windowService = new WindowService();
             LoginData= SettingsService.Deserialize();
             if (LoginData != string.Empty)
             {
@@ -28,30 +28,30 @@ namespace OrganiserApp.ViewModels
 
         #region Properties
 
-        private string loginData;
+        private string _loginData;
         public string LoginData
         {
             get
             {
-                return loginData;
+                return _loginData;
             }
             set
             {
-                loginData = value;
+                _loginData = value;
                 RaisePropertyChanged("LoginData");
             }
         }
 
-        private bool saveLogin;
+        private bool _saveLogin;
         public bool SaveLogin
         {
             get
             {
-                return saveLogin;
+                return _saveLogin;
             }
             set
             {
-                saveLogin = value;
+                _saveLogin = value;
                 if(value == false)
                 {
                     SettingsService.DeleteSerialized();
@@ -73,7 +73,7 @@ namespace OrganiserApp.ViewModels
                 {
                     SettingsService.Serialize(LoginData);
                 }
-                windowService.ShowMainWindow(mainViewModel);
+                _windowService.ShowMainWindow(_mainViewModel);
                 window.Close();
             }
         }
