@@ -1,10 +1,14 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml.Serialization;
 
 namespace OrganiserApp.Services
 {
     public static class SettingsService
     {
+
+        
+
         #region public methods
 
         /// <summary>
