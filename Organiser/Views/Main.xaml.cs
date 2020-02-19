@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using OrganiserApp.ViewModels;
+using System.Windows;
 
-namespace OrganiserApp.ViewModels
+namespace OrganiserApp.Views
 {
     /// <summary>
     /// Logika interakcji dla klasy Main.xaml

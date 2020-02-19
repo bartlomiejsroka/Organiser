@@ -12,7 +12,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" x:Name="ErrorName" Height="20" Width="100" HorizontalAlignment="Center"  VerticalAlignment="Center" Text="{Binding ErrorText}"/>
+        <TextBlock Grid.Row="0" x:Name="ErrorName" Height="20" Width="200" HorizontalAlignment="Center"  VerticalAlignment="Center" Text="{Binding ErrorText}"/>
         <Button Grid.Row="1" x:Name="OkButton" Height="30" Width="80" Command="{Binding OkButtonCommand}" CommandParameter="{Binding ElementName=ErrorWindow}" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <TextBlock>Ok</TextBlock>
         </Button>

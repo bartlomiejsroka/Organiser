@@ -1,7 +1,9 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OrganiserApp.ViewModels
 {
@@ -11,7 +13,7 @@ namespace OrganiserApp.ViewModels
 
         public MainViewModel()
         {
-
+            LogoutButtonCommand = new RelayCommand<Window>(LogOut);
         }
 
         #endregion
@@ -30,7 +32,14 @@ namespace OrganiserApp.ViewModels
                 RaisePropertyChanged("Jwt");
             }
         }
-        public Task<string> Task { get; set; }
+        #endregion
+
+        #region Commands
+        public RelayCommand<Window> LogoutButtonCommand { get; private set; }
+        private async void LogOut(Window window)
+        {
+
+        }
             #endregion
 
         }

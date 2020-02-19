@@ -92,17 +92,18 @@ namespace OrganiserApp.ViewModels
                 catch (Exception e)
                 {
                     _errorViewModel.ErrorText = e.Message;
-                    _windowService.ShowErrorWindow(_errorViewModel);
+                    _windowService.ShowWindow(_errorViewModel);
                     connectionOk = false;
                 }
                 if (_webService.IsLoginValid && connectionOk)
                 {
-                    _windowService.ShowMainWindow(_mainViewModel);
+                    _windowService.ShowWindow(_mainViewModel);
                     window.Close();
                 }
                 if(!_webService.IsLoginValid && connectionOk)
                 {
-                    MessageBox.Show("Wrong login data");
+                    _errorViewModel.ErrorText = "Wrong login data";
+                    _windowService.ShowWindow(_errorViewModel);
                 }
             }
         }

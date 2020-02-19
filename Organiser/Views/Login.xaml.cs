@@ -1,14 +1,14 @@
 ﻿using OrganiserApp.ViewModels;
 using System.Windows;
 
-namespace Organiser
+namespace OrganiserApp.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Login : Window
     {
-        public MainWindow()
+        public Login()
         {
             InitializeComponent();
             DataContext = new LoginViewModel();
