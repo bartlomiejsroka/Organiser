@@ -70,6 +70,24 @@ namespace OrganiserApp {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Password can not be empty.
+        /// </summary>
+        internal static string EmptyPasswordError {
+            get {
+                return ResourceManager.GetString("EmptyPasswordError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Username can not be empty.
+        /// </summary>
+        internal static string EmptyUserNameError {
+            get {
+                return ResourceManager.GetString("EmptyUserNameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu //LoginData.xml.
         /// </summary>
         internal static string LoginFileName {

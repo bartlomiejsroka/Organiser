@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using OrganiserApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,16 @@ namespace OrganiserApp.ViewModels
 {
     class MainViewModel : ViewModelBase
     {
+
+        private WindowService _windowService;
+        private LoginViewModel _loginViewModel;
         #region Ctors
 
-        public MainViewModel()
+        public MainViewModel(LoginViewModel loginViewModel)
         {
             LogoutButtonCommand = new RelayCommand<Window>(LogOut);
+            _windowService = new WindowService();
+            _loginViewModel = loginViewModel;
         }
 
         #endregion
@@ -36,9 +42,11 @@ namespace OrganiserApp.ViewModels
 
         #region Commands
         public RelayCommand<Window> LogoutButtonCommand { get; private set; }
-        private async void LogOut(Window window)
+        private void LogOut(Window window)
         {
-
+            _jwt = null;
+            _windowService.ShowWindow(_loginViewModel);
+            window.Close();
         }
             #endregion
 

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using OrganiserApp.Services;
 using System;
+using System.Security;
 using System.Windows;
  
 
@@ -9,7 +10,7 @@ namespace OrganiserApp.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         private WebService _webService = new WebService();
-        private MainViewModel _mainViewModel = new MainViewModel();
+        private MainViewModel _mainViewModel;
         private ErrorViewModel _errorViewModel = new ErrorViewModel();
         private WindowService _windowService;
 
@@ -18,6 +19,7 @@ namespace OrganiserApp.ViewModels
         public LoginViewModel()
         {
             LoginButtonCommand = new RelayCommand<Window>(LogIn);
+            _mainViewModel = new MainViewModel(this);
             _windowService = new WindowService();
             Username= SettingsService.Deserialize();
             if (Username != string.Empty)
@@ -56,6 +58,19 @@ namespace OrganiserApp.ViewModels
                 RaisePropertyChanged("Password");
             }
         }
+        private SecureString _securepassword;
+        public SecureString SecurePassword
+        {
+            get
+            {
+                return _securepassword;
+            }
+            set
+            {
+                _securepassword = value;
+                RaisePropertyChanged("SecurePassword");
+            }
+        }
         private bool _saveLogin;
         public bool SaveLogin
         {
@@ -87,23 +102,24 @@ namespace OrganiserApp.ViewModels
                 if (SaveLogin){ SettingsService.Serialize(Username); }
                 try
                 {
-                    await _webService.GetTokenAsync(Username, Password);
+                    await _webService.GetTokenAsync(Username, SecurePassword);
                 }
                 catch (Exception e)
                 {
                     _errorViewModel.ErrorText = e.Message;
-                    _windowService.ShowWindow(_errorViewModel);
+                    _windowService.ShowErrorWindow(_errorViewModel);
                     connectionOk = false;
                 }
                 if (_webService.IsLoginValid && connectionOk)
                 {
                     _windowService.ShowWindow(_mainViewModel);
+                    _securepassword = null;
                     window.Close();
                 }
                 if(!_webService.IsLoginValid && connectionOk)
                 {
                     _errorViewModel.ErrorText = "Wrong login data";
-                    _windowService.ShowWindow(_errorViewModel);
+                    _windowService.ShowErrorWindow(_errorViewModel);
                 }
             }
         }

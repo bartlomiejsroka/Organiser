@@ -4,9 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        x:Name="MainWindow"
         Title="Main" Height="450" Width="800">
     <Grid>
-        <Calendar/>
-        <TextBlock x:Name="Jwt" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding Jwt}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button Grid.Column="0" Grid.Row="0" x:Name="LogoutButton" Width="80" Content="Logout" Height="30" Command="{Binding LogoutButtonCommand}" CommandParameter="{Binding ElementName=MainWindow}"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

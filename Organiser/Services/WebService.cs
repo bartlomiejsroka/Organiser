@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,24 +21,24 @@ namespace OrganiserApp.Services
         {
             get
             {
-                return _jwt == _wrongLoginData || _jwt ==null ? false : true; 
+                return _jwt == _wrongLoginData || _jwt == null ? false : true;
             }
         }
 
         #region public methods
-
         /// <summary>
         /// Sends login data to api and wait for request
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>"ok" string when taks is done</returns>
-        public async Task<string> GetTokenAsync(string username, string password)
+        public async Task<string> GetTokenAsync(string username, SecureString password)
         {
+            ValidateLoginData(username, password);
             var values = new Dictionary<string, string>{
                 {"username", username },
-                { "password", password }
-            };
+                { "password", SecureStringToString(password) }
+                };
             var content = new FormUrlEncodedContent(values);
             try
             {
@@ -44,12 +46,37 @@ namespace OrganiserApp.Services
                 _jwt = await response.Content.ReadAsStringAsync();
                 return "ok";
             }
-            catch{
+            catch
+            {
                 throw new ApplicationException(Resources.ConnectionError);
             }
         }
-
         #endregion
 
+        private String SecureStringToString(SecureString value)
+        {
+            IntPtr valuePtr = IntPtr.Zero;
+            try
+            {
+                valuePtr = Marshal.SecureStringToGlobalAllocUnicode(value);
+                return Marshal.PtrToStringUni(valuePtr);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
+            }
+        }
+
+        private void ValidateLoginData(string username, SecureString password)
+        {
+            if (username == string.Empty)
+            {
+                throw new ApplicationException(Resources.EmptyUserNameError);
+            }
+            else if (password == null || password.Length == 0)
+            {
+                throw new ApplicationException(Resources.EmptyPasswordError);
+            }
+        }
     }
 }

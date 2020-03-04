@@ -11,7 +11,7 @@ namespace OrganiserApp.Views
         public Main()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(new LoginViewModel());
         }
     }
 }

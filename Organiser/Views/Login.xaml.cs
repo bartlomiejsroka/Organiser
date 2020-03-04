@@ -1,5 +1,6 @@
 ﻿using OrganiserApp.ViewModels;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace OrganiserApp.Views
 {
@@ -13,5 +14,14 @@ namespace OrganiserApp.Views
             InitializeComponent();
             DataContext = new LoginViewModel();
         }
-    }
+        //todo get rid of this
+        private void Password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            {
+               ((LoginViewModel)this.DataContext).SecurePassword = ((PasswordBox)sender).SecurePassword; 
+            }
+        }
+        }
+    
 }
