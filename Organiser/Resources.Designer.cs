@@ -95,5 +95,14 @@ namespace OrganiserApp {
                 return ResourceManager.GetString("LoginFileName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu User already exist.
+        /// </summary>
+        internal static string UserExist {
+            get {
+                return ResourceManager.GetString("UserExist", resourceCulture);
+            }
+        }
     }
 }

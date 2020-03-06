@@ -3,25 +3,26 @@ using OrganiserApp.Services;
 using System;
 using System.Security;
 using System.Windows;
- 
+
 
 namespace OrganiserApp.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
         private WebService _webService = new WebService();
-        private MainViewModel _mainViewModel;
         private ErrorViewModel _errorViewModel = new ErrorViewModel();
+        private RegisterViewModel _registerViewModel;
+        private MainViewModel _mainViewModel;
         private WindowService _windowService;
-
         #region Ctors
 
         public LoginViewModel()
         {
             LoginButtonCommand = new RelayCommand<Window>(LogIn);
+            RegisterButtonCommand = new RelayCommand<Window>(Register);
             _mainViewModel = new MainViewModel(this);
             _windowService = new WindowService();
-            Username= SettingsService.Deserialize();
+            Username = SettingsService.Deserialize();
             if (Username != string.Empty)
             {
                 SaveLogin = true;
@@ -81,7 +82,7 @@ namespace OrganiserApp.ViewModels
             set
             {
                 _saveLogin = value;
-                if(value == false)
+                if (value == false)
                 {
                     SettingsService.DeleteSerialized();
                 }
@@ -92,14 +93,14 @@ namespace OrganiserApp.ViewModels
         #endregion
 
         #region commands
-       
+
         public RelayCommand<Window> LoginButtonCommand { get; private set; }
         private async void LogIn(Window window)
         {
             bool connectionOk = true;
             if (window != null)
             {
-                if (SaveLogin){ SettingsService.Serialize(Username); }
+                if (SaveLogin) { SettingsService.Serialize(Username); }
                 try
                 {
                     await _webService.GetTokenAsync(Username, SecurePassword);
@@ -116,13 +117,22 @@ namespace OrganiserApp.ViewModels
                     _securepassword = null;
                     window.Close();
                 }
-                if(!_webService.IsLoginValid && connectionOk)
+                if (!_webService.IsLoginValid && connectionOk)
                 {
                     _errorViewModel.ErrorText = "Wrong login data";
                     _windowService.ShowErrorWindow(_errorViewModel);
                 }
             }
         }
+
+        public RelayCommand<Window> RegisterButtonCommand { get; private set; }
+        private void Register(Window window)
+        {
+            _registerViewModel = new RegisterViewModel();
+            _windowService.ShowWindow(_registerViewModel);
+            window.Close();
+        }
+
         #endregion
 
     }

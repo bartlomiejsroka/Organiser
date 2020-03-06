@@ -51,6 +51,35 @@ namespace OrganiserApp.Services
                 throw new ApplicationException(Resources.ConnectionError);
             }
         }
+
+        public async Task<string> RegisterUserAsync(string username, SecureString password,SecureString confirmpassword)
+        {
+           
+            if (SecureStringToString(password) != SecureStringToString(confirmpassword))
+            {
+                throw new ApplicationException("Password mismatch");
+            }
+            ValidateLoginData(username, password);
+            var values = new Dictionary<string, string>{
+                {"username", username },
+                { "password", SecureStringToString(password) },
+                { "confirmpassword", SecureStringToString(confirmpassword) },
+                };
+            var content = new FormUrlEncodedContent(values);
+            try
+            {
+               var response = await _client.PostAsync("https://localhost:44326/reg", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                {
+                    return Resources.UserExist;
+                }
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch(Exception e)
+            {
+                throw new ApplicationException(Resources.ConnectionError);
+            }
+        }
         #endregion
 
         private String SecureStringToString(SecureString value)

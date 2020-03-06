@@ -129,4 +129,7 @@
   <data name="LoginFileName" xml:space="preserve">
     <value>//LoginData.xml</value>
   </data>
+  <data name="UserExist" xml:space="preserve">
+    <value>User already exist</value>
+  </data>
 </root>
