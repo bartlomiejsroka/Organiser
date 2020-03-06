@@ -42,7 +42,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
     </Window.Resources>
     <Grid>
         <Grid>
@@ -72,9 +78,9 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" x:Name="LoginTextBlock"  Width="100" Text="Login" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="10"/>
+                <TextBlock Grid.Row="0" x:Name="LoginTextBlock"  Width="100" Text="Login" TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="10" />
                 <TextBox Grid.Row="0" Grid.Column="1" x:Name="LoginTextBox" TextAlignment="Center" Height="30" Margin="5" Text="{Binding Username}" Background="#52c7b8" Foreground="Black" MaxLength="16"/>
-                <TextBlock Grid.Row="1" x:Name="PasswordTextBlock" Width="100" Text="Password" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="10" />
+                <TextBlock Grid.Row="1" x:Name="PasswordTextBlock" Width="100" TextAlignment="Right" Text="Password" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="10" />
                 <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="Password"  Height="30" Margin="5" Background="#52c7b8" HorizontalContentAlignment="Center" PasswordChanged="Password_PasswordChanged" MaxLength="16"/>
 
             </Grid>
